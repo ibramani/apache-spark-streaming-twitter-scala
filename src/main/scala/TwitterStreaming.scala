@@ -37,7 +37,7 @@ object TwitterStreaming {
     val filters = Source.fromFile("src/main/resources/filters.txt").getLines().toArray
 
     val sc = new SparkContext(conf)
-    val ssc = new StreamingContext(sc, Seconds(30))
+    val ssc = new StreamingContext(sc, Seconds(120))
     val stream = TwitterUtils.createStream(ssc, None, filters)
 
     val sqlContext = new SQLContext(sc)
