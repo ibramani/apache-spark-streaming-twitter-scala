@@ -43,11 +43,12 @@ object TwitterStreaming {
     val sqlContext = new SQLContext(sc)
     import sqlContext.implicits._
 
-    val tweets = stream.map(s=> ("" -> s.getText, "" -> s.getRetweetCount.toString, "" -> s.isFavorited, "" -> s.isTruncated, "" -> s.getId.toString, "" -> s.getInReplyToScreenName, "" -> s.getSource.toString, "" -> s.isRetweetedByMe))
-    tweets.foreachRDD(rdd => rdd.toDF().write
+    val tweets = stream.map(s=> ("" -> s.getText, "" -> s.getRetweetCount.toString, "" -> s.isFavorited, "" -> s.isTruncated, "" -> s.getId.toString, "" -> s.getInReplyToScreenName, "" -> s.getSource.toString, "" -> s.isRetweetedByMe, "" -> s.getCreatedAt.toString, "" -> s.getInReplyToStatusId.toString, "" -> s.getInReplyToUserId.toString, "" -> s.getUser.getListedCount.toString, "" -> s.getUser.isVerified, "" -> s.getUser.getLocation, "" -> s.getUser.getId.toString, "" -> s.getUser.getDescription, "" -> s.getUser.isGeoEnabled, "" -> s.getUser.getCreatedAt.toString, "" -> s.getUser.getStatusesCount.toString, "" -> s.getUser.getFollowersCount.toString, "" -> s.getUser.getFavouritesCount.toString, "" -> s.getUser.isProtected, "" -> s.getUser.getName))
+    tweets.foreachRDD(rdd => rdd.toDF()
+      .write
       .format("com.databricks.spark.csv")
       .option("header", "true")
-      .save("newdata.csv")
+      .save("test")
     )
 
 
